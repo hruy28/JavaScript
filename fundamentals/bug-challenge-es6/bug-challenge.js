@@ -41,33 +41,43 @@ export default class BugChallenge {
         age: 40
       }];
 
-      for (let person in people) {
+      for (let person of people) {
         console.log(`${person.name} is ${person.age}`);
       }
     }
-
+    /* bug1: I replace the keyword 'in' within the for loop with 'of' */
+    
     bug2() {
       const array = [1, 2, 3, 4];
-
+       
       for (let i = 0; i < array.length; i++) {
         console.log(array.pop());
+        console.log(array.pop());
+        console.log(array.pop());
+        console.log(array.pop());
+
       }
     }
-
+   /* bug2: I used console log and the functions pop() so that every time the function loops 
+      it prints out the last element in the array. So that it is reversed.*/
+   
     bug3() {
-      const array = {};
-      array[0] = 'a';
-      array[1] = 'b';
-      array[2] = 'c';
+      const array = [];
+      array[0] = 0;
+      array[1] = 1;
+      array[2] = 2;
 
       let total = 0;
-      for (let key in obj) {
+      for (let key of array) {
         total += key;
       }
 
       console.log(total);
     }
-
+  /* bug3: First I replace the empty curly bracket with an empty square bracket as it is an array.
+     Second I replace the string values with number values so that it can perform addition. Third
+     I replace the keyword 'in' with 'of'. */
+   
     bug4() {
       // We list all movies, except the top 3.
       var index = 3;
@@ -76,14 +86,17 @@ export default class BugChallenge {
       }
 
       // We also list all actors, except the top 3.
-      for (index; index < top10Actors.length; index++) {
+      var index = 3;
+      for (index; index < this.top10Actors.length; index++) {
         console.log(`actor: ${this.top10Actors[index]}`);
       }
     }
-
+   /* bug4: The first for loop was working but the second one was saying undefined as we have not 
+            specified the starting for the loop that is the the third index.*/
+   
     bug5() {
       const defaultMethod = 'GET';
-      const defaultUseCaching = true;
+      const defaultUseCaching = false;
 
       function fetch(options) {
         const url = options.url;
@@ -98,9 +111,10 @@ export default class BugChallenge {
         useCaching: false
       });
     }
-
+  // bug5: I changed the default value for caching to false as the test was to disable caching for fetch.
+   
     bug6() {
-      function run(options) {
+      function run(options = {}) {
         if (options.script == undefined) {
           options.script = 'main.js';
         }
@@ -110,28 +124,37 @@ export default class BugChallenge {
 
       run();
     }
-
+  /* bug6: I have declared the script property within the parameter and as an empty bracket. 
+           So it is undefined which meets the if statement.*/
+   
     bug7() {
       function run(options = {}) {
-        if (options.stopOnError == undefined) {
+        if (options.stopOnError === undefined) {
           options.stopOnError = 'all';
-        }
-
-        console.log(`run: stopOnError=${options.stopOnError}`);
+        } 
+           console.log(`run: stopOnError=${options.stopOnError}`);
       }
-
+     
       run();
       run({stopOnError: null});
     }
-
+  /* bug7: The comparison operator inside the if statement must compare for the exact value and
+       type '===' inorder to run the second callback*/
+   
     bug8() {
-      for (var i = 0; i < 5; i++) {
-        setTimeout(function () {
-          console.log(i+1);
-        }, 100*i);
-      }
+      for (var i = 1; i <= 5; i++) {
+            setDelay(i);
+       } 
+       function setDelay(i) {    
+          setTimeout(function () {
+          console.log(i);
+        }, 100);
+      
+       }
     }
-
+ /* bug8: It set the timeout from within a function as the previous code has drawbacks. It printed the 
+          number 6 five times as the variables passed don't keep their intial value.*/
+   
     bug9() {
       const cars = [{
         make: 'Volvo',
@@ -148,27 +171,34 @@ export default class BugChallenge {
       }];
 
       function findCars(make) {
-        return cars.filter(car => car.make = make);
+        return cars.filter(car =>car.make === make);
       }
 
       for (let bmw of findCars('BMW')) {
         console.log(`${bmw.make} ${bmw.type}`);
       }
     }
-
+  /*bug9: The argument 'BMW' should be equal to the property of the cars.make and not assigned as it 
+  used to print them all as having the same value 'BMW' */ 
+   
     bug10() {
       const command = 'printHelp';
 
       switch (command) {
         case 'printMath':
           console.log(`√9=${Math.sqrt(9)}`);
+          break;
         case 'printHelp':
           console.log('Help');
+          break;
         case 'quit':
           console.log('Quitting');
+          break;
       }
     }
-
+ /* bug10: The original code doesn't have the keyword 'break;' and the exection would go continously.
+          I add the keyword 'break' so that the exection can stop when a match is found.*/
+    
     bug11() {
       class Game {
         constructor() {
@@ -177,8 +207,8 @@ export default class BugChallenge {
 
         addPlayers(names) {
           names.forEach(function (name) {
-            this.players.push({name, points: 0});
-          });
+             this.players.push({name, points: 0});
+          }, this);
         }
       }
 
@@ -189,13 +219,16 @@ export default class BugChallenge {
         console.log(`Player ${player.name} has ${player.points} points`);
       }
     }
-
+ /* bug11:  this.players fails, because the function’s this is undefined, it is not the same as the 
+            this of the constructor. This method has a second parameter whose value is passed to the 
+            callback as this.*/   
+    
     bug12() {
       let y = 5;
 
       function printVector() {
         let x = 6;
-            y = 7;
+        let y = 7;
 
         console.log(`Printing vector at (${x}, ${y})`);
       }
@@ -203,35 +236,47 @@ export default class BugChallenge {
       printVector();
       console.log(`y=${y}`);
     }
-
+ /* bug12: I added the keyword let for the value 7 so that it can only be used within the function. */
+   
     bug13() {
       var notInTop10 = (movieName) => {
-        return !this.top10Movies.indexOf(movieName)
+        return this.top10Movies.indexOf(movieName) === -1
       }
       console.log('Independence Day is ' + (notInTop10('Independence Day')?'not ':'') + 'in the top 10!');
       console.log('AI is ' + (notInTop10('AI')?'not ':'') + 'in the top 10!');
       console.log('Godfather is ' + (notInTop10('Godfather')?'not ':'') + 'in the top 10!');
       console.log('Inception is ' + (notInTop10('Inception')?'not ':'') + 'in the top 10!');
     }
+  /* bug13: The index of the first occurrence of the specified value if not found is -1. If the index is 
+     not found that means it index is equal to -1 and prints out as not found within the top 10.  */ 
+    
     bug14() {
-
-      console.log('AI is ' + (isInFirstPlace('AI')?'':'not ') + 'best movie ever')
-      console.log('Godfather is ' + (isInFirstPlace('Godfather')?'':'not ') + 'best movie ever')
       var isInFirstPlace = (movieName) => {
         return this.top10Movies[0] === movieName
-      }
+      }  
+         console.log('AI is ' + (isInFirstPlace('AI')?'':'not ') + 'best movie ever');
+         console.log('Godfather is ' + (isInFirstPlace('Godfather')?'':'not ') + 'best movie ever');
+      
     }
+    /* bug14: I put the console log within the function so as it can print after the function is executed.
+              Before it was returnig error message as it was outside the function.*/
+    
     bug15() {
-      var getAlphabeticalFirst = function() {
-        return this.top10Actors.sort()[0]
+      var getAlphabeticalFirst = () => {
+        return this.top10Actors.sort()[0];
       }
 
       console.log(`The first actor when sorted alphabetically is ${getAlphabeticalFirst()}`)
     }
+    /* bug15: When I changed the anonymous function to an arrow function it works. But how it 
+               works is a puzzle to me. I need an explanation on this one.*/
+
     bug16() {
       const ranking = this.top10Actors.indexOf('Al Pacino');
-      // var thirdRankedActor = this.top10Actors['2'];
-      console.log(`Al Pacino is ranked ${ranking + '1'}`)
+      console.log(`Al Pacino is ranked ${ranking + 4}`)
     }
 
+    /* bug16: Before the number 1 was within a string so it was concatenated. The result was '31'.
+        Now it is adding the index of the passed parameter and returning 4. But the real ranking is 
+        that he is first because of the previous function which has ranked them based on alphabet.*/
 }
