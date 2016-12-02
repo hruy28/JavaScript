@@ -1,13 +1,14 @@
 import BugChallenge from '../bug-challenge';
 import '../jest-helpers';
 
-const challenge = new BugChallenge();
-
 describe('Bug challenge ES6', () => {
 
+  let challenge;
   beforeEach(() => {
     console.clear();
+    challenge = new BugChallenge();
   });
+
 
   describe('bug1', () => {
 

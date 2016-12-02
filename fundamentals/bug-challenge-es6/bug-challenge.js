@@ -50,44 +50,40 @@ export default class BugChallenge {
     bug2() {
       const array = [1, 2, 3, 4];
        
-      for (let i = 0; i < array.length; i++) {
-        console.log(array.pop());
-        console.log(array.pop());
-        console.log(array.pop());
-        console.log(array.pop());
-
-      }
+        while (array.length > 0) {
+          console.log(array.pop());
+        }
     }
    /* bug2: I used console log and the functions pop() so that every time the function loops 
       it prints out the last element in the array. So that it is reversed.*/
    
     bug3() {
       const array = [];
-      array[0] = 0;
-      array[1] = 1;
-      array[2] = 2;
-
+      array[0] = 'a';
+      array[1] = 'b';
+      array[2] = 'c';
+      
+       
       let total = 0;
-      for (let key of array) {
-        total += key;
+      for (let key in array) {
+         total = ++key;
       }
 
       console.log(total);
     }
   /* bug3: First I replace the empty curly bracket with an empty square bracket as it is an array.
-     Second I replace the string values with number values so that it can perform addition. Third
-     I replace the keyword 'in' with 'of'. */
+           Then I increment the index number of the array and assigned it to the variable total. */
    
     bug4() {
       // We list all movies, except the top 3.
-      var index = 3;
-      for (index; index < this.top10Movies.length; index++) {
+    
+      for (let index = 3; index < this.top10Movies.length; index++) {
         console.log(`movie: ${this.top10Movies[index]}`);
       }
 
       // We also list all actors, except the top 3.
-      var index = 3;
-      for (index; index < this.top10Actors.length; index++) {
+      
+      for (let index = 3; index < this.top10Actors.length; index++) {
         console.log(`actor: ${this.top10Actors[index]}`);
       }
     }
@@ -96,12 +92,12 @@ export default class BugChallenge {
    
     bug5() {
       const defaultMethod = 'GET';
-      const defaultUseCaching = false;
+      const defaultUseCaching = true;
 
       function fetch(options) {
         const url = options.url;
         const method = options.method || defaultMethod;
-        const useCaching = options.useCaching || defaultUseCaching;
+        const useCaching = options.useCaching;
 
         console.log(`fetch: ${method} ${url} (useCaching=${useCaching})`);
       }
@@ -111,7 +107,10 @@ export default class BugChallenge {
         useCaching: false
       });
     }
-  // bug5: I changed the default value for caching to false as the test was to disable caching for fetch.
+
+  /* bug5: I deleted the default value for caching on the const 'useCaching'. Although I need more explanation 
+          on this. And I hope I have done the right thing here. */ 
+        
    
     bug6() {
       function run(options = {}) {
@@ -141,19 +140,15 @@ export default class BugChallenge {
   /* bug7: The comparison operator inside the if statement must compare for the exact value and
        type '===' inorder to run the second callback*/
    
-    bug8() {
-      for (var i = 1; i <= 5; i++) {
-            setDelay(i);
-       } 
-       function setDelay(i) {    
-          setTimeout(function () {
-          console.log(i);
-        }, 100);
-      
-       }
+     bug8() {
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          console.log(i+1);
+        }, 100*i);
+      }
     }
- /* bug8: It set the timeout from within a function as the previous code has drawbacks. It printed the 
-          number 6 five times as the variables passed don't keep their intial value.*/
+ /* bug8: I replaced 'var' with the keyword 'let' so that it can be used only with function. And I 
+          also replaced the anonymous function with the arrow function.*/
    
     bug9() {
       const cars = [{
@@ -206,9 +201,9 @@ export default class BugChallenge {
         }
 
         addPlayers(names) {
-          names.forEach(function (name) {
+          names.forEach((name) => {
              this.players.push({name, points: 0});
-          }, this);
+          });
         }
       }
 
@@ -258,8 +253,8 @@ export default class BugChallenge {
          console.log('Godfather is ' + (isInFirstPlace('Godfather')?'':'not ') + 'best movie ever');
       
     }
-    /* bug14: I put the console log within the function so as it can print after the function is executed.
-              Before it was returnig error message as it was outside the function.*/
+    /* bug14:Putting the console.log statements after the function declaration solved the problem. That is 
+             because functions are hoisted up, and variables are not (only their declaration is).*/
     
     bug15() {
       var getAlphabeticalFirst = () => {
@@ -273,7 +268,7 @@ export default class BugChallenge {
 
     bug16() {
       const ranking = this.top10Actors.indexOf('Al Pacino');
-      console.log(`Al Pacino is ranked ${ranking + 4}`)
+      console.log(`Al Pacino is ranked ${ranking + 1}`)
     }
 
     /* bug16: Before the number 1 was within a string so it was concatenated. The result was '31'.
