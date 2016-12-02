@@ -87,8 +87,8 @@ export default class BugChallenge {
         console.log(`actor: ${this.top10Actors[index]}`);
       }
     }
-   /* bug4: The first for loop was working but the second one was saying undefined as we have not 
-            specified the starting for the loop that is the the third index.*/
+   /* bug4: I declared the index variable within both for loop and intialize it with 3. So that we 
+            can eliminate the first 3 movies. */
    
     bug5() {
       const defaultMethod = 'GET';
@@ -214,9 +214,8 @@ export default class BugChallenge {
         console.log(`Player ${player.name} has ${player.points} points`);
       }
     }
- /* bug11:  this.players fails, because the function’s this is undefined, it is not the same as the 
-            this of the constructor. This method has a second parameter whose value is passed to the 
-            callback as this.*/   
+ /* bug11:  this.players fails, because the function’s this is undefined, outside the function. 
+             Adding the arrow function lets you to use the player property outside.   */   
     
     bug12() {
       let y = 5;
@@ -243,7 +242,7 @@ export default class BugChallenge {
       console.log('Inception is ' + (notInTop10('Inception')?'not ':'') + 'in the top 10!');
     }
   /* bug13: The index of the first occurrence of the specified value if not found is -1. If the index is 
-     not found that means it index is equal to -1 and prints out as not found within the top 10.  */ 
+            not found that means it index is equal to -1 and prints out as not found within the top 10.  */ 
     
     bug14() {
       var isInFirstPlace = (movieName) => {
@@ -263,8 +262,9 @@ export default class BugChallenge {
 
       console.log(`The first actor when sorted alphabetically is ${getAlphabeticalFirst()}`)
     }
-    /* bug15: When I changed the anonymous function to an arrow function it works. But how it 
-               works is a puzzle to me. I need an explanation on this one.*/
+    /* bug15: using an arrow function makes sure that whatever is `this` outside of the function, is 
+        also `this` inside the function. If you use `function`, the function will have a very different 
+        `this`. That's one of the advantages of using the arrow functions.*/
 
     bug16() {
       const ranking = this.top10Actors.indexOf('Al Pacino');
@@ -272,6 +272,6 @@ export default class BugChallenge {
     }
 
     /* bug16: Before the number 1 was within a string so it was concatenated. The result was '31'.
-        Now it is adding the index of the passed parameter and returning 4. But the real ranking is 
-        that he is first because of the previous function which has ranked them based on alphabet.*/
+              Now it is adding the index of the passed parameter(3) and adding 1 to return 4. 
+        */
 }
