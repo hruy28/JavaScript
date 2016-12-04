@@ -58,7 +58,7 @@ export default class BugChallenge {
       it prints out the last element in the array. So that it is reversed.*/
    
     bug3() {
-      const array = [];
+      const array = {};
       array[0] = 'a';
       array[1] = 'b';
       array[2] = 'c';
@@ -66,7 +66,7 @@ export default class BugChallenge {
        
       let total = 0;
       for (let key in array) {
-         total = ++key;
+         total += parseInt(key);
       }
 
       console.log(total);
@@ -97,15 +97,18 @@ export default class BugChallenge {
       function fetch(options) {
         const url = options.url;
         const method = options.method || defaultMethod;
-        const useCaching = options.useCaching;
+        const useCaching = options.useCaching && options.defaultUseCaching ;
 
         console.log(`fetch: ${method} ${url} (useCaching=${useCaching})`);
       }
 
+      
       fetch({
         url: 'http://www.example.com',
-        useCaching: false
-      });
+        useCaching: false,
+      }); 
+
+      
     }
 
   /* bug5: I deleted the default value for caching on the const 'useCaching'. Although I need more explanation 
